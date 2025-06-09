@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'总览' + ' | 后台管理系统'">后台管理系统</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自定义CSS -->
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- 主内容区 -->
+    <div class="container-fluid">
+
+
+        <div class="row">
+            <!-- 侧边栏 -->
+            <div class="col-md-2 sidebar p-0">
+                <div class="p-3">
+                    <h4>后台管理系统</h4>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a th:href="@{/index}" th:classappend="${activePage == 'index'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-home me-2"></i>总览
+                    </a>
+                    <a th:href="@{/department}" th:classappend="${activePage == 'department'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-hospital me-2"></i>科室信息管理
+                    </a>
+                    <a th:href="@{/doctor}" th:classappend="${activePage == 'doctor'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-hospital me-2"></i>医生信息管理
+                    </a>
+                </div>
+            </div>
+
+            <!-- 内容区 -->
+            <div class="col-md-10 ms-sm-auto px-4" id="main-content">
+                <div class="pagetitle">
+                    <h1>总览</h1>
+                </div>
+
+                <!-- 用户信息区域 -->
+                <div class="user-info-container mb-4">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <span class="user-greeting me-3" th:text="'欢迎，' + ${session.user}"></span>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-logout">
+                                <i class="fas fa-sign-out-alt"></i> 退出登录
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <section class="section">
+                    <!-- 数据统计卡片 -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">今日剩余挂号</h5>
+                                    <p class="card-text display-6" th:text="${remainingAppointments}">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 快捷操作 -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5>快捷操作</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a href="#" class="btn btn-primary btn-block">
+                                        <i class="fas fa-user-md"></i> 医生管理
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="#" class="btn btn-success btn-block">
+                                        <i class="fas fa-procedures"></i> 科室管理
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="#" class="btn btn-warning btn-block">
+                                        <i class="fas fa-calendar-check"></i> 预约管理
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="#" class="btn btn-info btn-block">
+                                        <i class="fas fa-file-medical"></i> 病历管理
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 自定义JS -->
+    <script th:src="@{/js/index.js}"></script>
+</body>
+
+</html>

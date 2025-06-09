@@ -1,0 +1,12 @@
+/* 自定义样式 */
+.card-header {
+    background-color: #f8f9fa;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.edit-btn, .delete-btn {
+    margin-left: 5px;
+}

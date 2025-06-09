@@ -1,0 +1,134 @@
+/* 基础样式 */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* 导航样式 */
+.sidebar {
+  min-height: 100vh;
+  background-color: #343a40;
+  color: white;
+}
+
+.sidebar .list-group-item {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+}
+
+.sidebar .list-group-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .list-group-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .list-group-item i {
+  margin-right: 8px;
+}
+
+/* 主体内容样式 */
+.main-content {
+  padding: 20px;
+  flex: 1;
+}
+
+/* 侧边栏高度调整 */
+.sidebar {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+}
+
+.pagetitle {
+  margin-bottom: 20px;
+}
+
+/* 表格样式 */
+.table-container {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* 按钮样式 */
+.btn-action {
+  margin: 0 5px;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+  min-height: calc(100vh - 56px);
+  padding: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 用户信息区域样式 */
+.user-info-container {
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.user-greeting {
+  font-size: 1.1rem;
+  color: #343a40;
+  font-weight: 500;
+}
+
+.btn-logout {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-logout i {
+  margin-right: 5px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .user-info-container {
+    padding: 12px 15px;
+  }
+
+  .user-greeting {
+    font-size: 1rem;
+  }
+
+  .btn-logout {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* 内容区顶部间距 */
+.ms-sm-auto {
+  padding-top: 20px;
+}
+
+/* 表格操作按钮间距 */
+.table button {
+  margin-right: 5px;
+}

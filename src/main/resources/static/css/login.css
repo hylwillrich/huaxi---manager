@@ -1,0 +1,47 @@
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+.card-header {
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    padding: 30px 20px;
+}
+.card-body {
+    background: white;
+    padding: 30px;
+}
+.form-control {
+    height: 50px;
+    border-radius: 8px;
+}
+.btn-login {
+    background: linear-gradient(to right, #667eea, #764ba2);
+    border: none;
+    height: 50px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+.input-group-text {
+    background: transparent;
+    border-right: none;
+}
+.form-control:focus {
+    box-shadow: none;
+    border-color: #667eea;
+}
+.error-message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+}
