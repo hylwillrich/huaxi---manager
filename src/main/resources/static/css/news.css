@@ -1,0 +1,10 @@
+.news-img {
+  max-width: 100px;
+  max-height: 100px;
+}
+#newsTable img {
+  cursor: pointer;
+}
+.modal-img {
+  max-width: 100%;
+}
