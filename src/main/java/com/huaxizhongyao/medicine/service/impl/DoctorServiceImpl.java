@@ -212,6 +212,32 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public List<Doctor> getDoctorsByDepartment(String department) {
+        String sql = "SELECT doc_id as docId, doc_name as docName, d_id as dId, " +
+                "COALESCE(d_name, '') as dName, doc_gender as docGender, doc_age as docAge, " +
+                "doc_photo as docPhoto, doc_class as docClass FROM doctor " +
+                "WHERE d_name = ?";
+        
+        return jdbcTemplate.query(sql, new Object[]{department}, (rs, rowNum) -> {
+            Doctor doctor = new Doctor();
+            doctor.setDocId(rs.getInt("docId"));
+            doctor.setDocName(rs.getString("docName"));
+            doctor.setDId(rs.getInt("dId"));
+            doctor.setDName(rs.getString("dName"));
+            doctor.setDocGender(rs.getString("docGender"));
+            doctor.setDocAge(rs.getInt("docAge"));
+            String photoPath = rs.getString("docPhoto");
+            if (photoPath != null && !photoPath.isEmpty()) {
+                doctor.setDocPhoto(photoPath.startsWith("/") ? photoPath : "/" + photoPath);
+            } else {
+                doctor.setDocPhoto("");
+            }
+            doctor.setDocClass(rs.getString("docClass"));
+            return doctor;
+        });
+    }
+
+    @Override
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }

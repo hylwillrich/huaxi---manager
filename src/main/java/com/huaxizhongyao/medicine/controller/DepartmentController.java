@@ -3,9 +3,12 @@ package com.huaxizhongyao.medicine.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpSession;
+
 import com.huaxizhongyao.medicine.pojo.Department;
 import com.huaxizhongyao.medicine.service.departmentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,8 +38,8 @@ public class DepartmentController {
 
     // 获取所有科室
     @GetMapping("/list")
-    public List<Department> getAllDepartments() {
-        return departmentService.getAllDepartments();
+    public ResponseEntity<List<Department>> getAllDepartments() {
+        return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
     // 获取科室总数

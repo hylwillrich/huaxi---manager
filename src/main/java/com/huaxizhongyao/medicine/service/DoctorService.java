@@ -27,4 +27,7 @@ public interface DoctorService {
 
     // 获取JdbcTemplate
     JdbcTemplate getJdbcTemplate();
+    
+    // 根据科室查询医生
+    List<Doctor> getDoctorsByDepartment(String department);
 }

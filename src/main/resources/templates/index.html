@@ -36,11 +36,15 @@
                     </a>
                     <a th:href="@{/doctor}" th:classappend="${activePage == 'doctor'} ? 'active'"
                         class="list-group-item list-group-item-action">
-                        <i class="fas fa-hospital me-2"></i>医生信息管理
+                        <i class="fas fa-user-md me-2"></i>医生信息管理
                     </a>
                     <a th:href="@{/news}" th:classappend="${activePage == 'news'} ? 'active'"
                         class="list-group-item list-group-item-action">
-                        <i class="fas fa-hospital me-2"></i>新闻信息管理
+                        <i class="fas fa-newspaper me-2"></i>新闻信息管理
+                    </a>
+                    <a th:href="@{/order}" th:classappend="${activePage == 'order'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-calendar-check me-2"></i>预约信息管理
                     </a>
                 </div>
             </div>
@@ -84,23 +88,23 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <a href="#" class="btn btn-primary btn-block">
+                                    <a href="/doctor" class="btn btn-primary btn-block">
                                         <i class="fas fa-user-md"></i> 医生管理
                                     </a>
                                 </div>
                                 <div class="col-md-3">
-                                    <a href="#" class="btn btn-success btn-block">
+                                    <a href="/department" class="btn btn-success btn-block">
                                         <i class="fas fa-procedures"></i> 科室管理
                                     </a>
                                 </div>
                                 <div class="col-md-3">
-                                    <a href="#" class="btn btn-warning btn-block">
+                                    <a href="/order" class="btn btn-warning btn-block">
                                         <i class="fas fa-calendar-check"></i> 预约管理
                                     </a>
                                 </div>
                                 <div class="col-md-3">
-                                    <a href="#" class="btn btn-info btn-block">
-                                        <i class="fas fa-file-medical"></i> 病历管理
+                                    <a href="/news" class="btn btn-info btn-block">
+                                        <i class="fas fa-file-medical"></i> 新闻管理
                                     </a>
                                 </div>
                             </div>

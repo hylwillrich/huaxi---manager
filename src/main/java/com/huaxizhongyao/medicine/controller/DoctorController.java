@@ -27,7 +27,7 @@ public class DoctorController {
     @GetMapping("")
     public String doctor(HttpSession session, org.springframework.ui.Model model) {
         if (session.getAttribute("user") == null) {
-            return "redirect:/login";
+            return "redirect:/login";   
         }
         model.addAttribute("doctorService", doctorService);
         return "doctor";
@@ -131,6 +131,19 @@ public class DoctorController {
         String sql = "SELECT d_id as id, d_name as name FROM department";
         List<Map<String, Object>> departments = doctorService.getJdbcTemplate().queryForList(sql);
         return ResponseEntity.ok(departments);
+    }
+
+    @GetMapping("/listByDepartment")
+    public ResponseEntity<List<Doctor>> getDoctorsByDepartment(@RequestParam String department) {
+        try {
+            List<Doctor> doctors = doctorService.getDoctorsByDepartment(department);
+            if (doctors == null || doctors.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(doctors);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @PostMapping("/delete/{id}")

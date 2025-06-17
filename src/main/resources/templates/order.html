@@ -1,0 +1,264 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预约管理</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/order.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 侧边栏 -->
+            <div class="col-md-2 sidebar p-0">
+                <div class="p-3">
+                    <h4>后台管理系统</h4>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a th:href="@{/index}" th:classappend="${activePage == 'index'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-home me-2"></i>总览
+                    </a>
+                    <a th:href="@{/department}" th:classappend="${activePage == 'department'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-hospital me-2"></i>科室信息管理
+                    </a>
+                    <a th:href="@{/doctor}" th:classappend="${activePage == 'doctor'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-user-md me-2"></i>医生信息管理
+                    </a>
+                    <a th:href="@{/news}" th:classappend="${activePage == 'news'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-newspaper me-2"></i>新闻信息管理
+                    </a>
+                    <a th:href="@{/order}" th:classappend="${activePage == 'order'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-calendar-check me-2"></i>预约信息管理
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 主内容区 -->
+            <div class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <h2 class="my-4">预约管理</h2>
+                
+                <!-- 操作按钮 -->
+                <div class="mb-3">
+                    <button id="addOrderBtn" class="btn btn-primary">添加预约</button>
+                </div>
+                
+                <!-- 预约表格 -->
+                <div class="table-responsive">
+                    <table id="orderTable" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>患者姓名</th>
+                                <th>患者年龄</th>
+                                <th>科室名称</th>
+                                <th>医生姓名</th>
+                                <th>科室楼层</th>
+                                <th>医生职级</th>
+                                <th>预约时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 数据将通过JS动态加载 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 分页控件 -->
+                <nav>
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- 分页将通过JS动态生成 -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加预约模态框 -->
+    <div class="modal fade" id="addOrderModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">添加预约</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="height: 500px; overflow-y: auto;">
+                    <form id="orderForm" class="needs-validation h-100" novalidate>
+                        <div class="row h-100 g-3">
+                            <div class="col-md-6 pe-3">
+                                <div class="mb-3">
+                                    <label for="pName" class="form-label">患者姓名</label>
+                                    <input type="text" class="form-control" id="pName" name="pName" required>
+                                    <div class="invalid-feedback">请输入患者姓名</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="pAge" class="form-label">患者年龄</label>
+                                    <input type="number" class="form-control" id="pAge" name="pAge" required>
+                                    <div class="invalid-feedback">请输入患者年龄</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="dName" class="form-label">科室名称</label>
+                                    <select class="form-select" id="dName" name="dName" required>
+                                        <option value="">请选择科室</option>
+                                    </select>
+                                    <div class="invalid-feedback">请选择科室</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="docName" class="form-label">医生姓名</label>
+                                    <select class="form-select" id="docName" name="docName" required>
+                                        <option value="">请选择医生</option>
+                                    </select>
+                                    <div class="invalid-feedback">请选择医生</div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="dFloor" class="form-label">楼层</label>
+                                    <input type="text" class="form-control" id="dFloor" name="d_floor" readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="docClass" class="form-label">医生职级</label>
+                                    <input type="text" class="form-control" id="docClass" name="doc_class" readonly>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="pDatetime" class="form-label">预约时间</label>
+                                    <input type="datetime-local" class="form-control" id="pDatetime" name="pDatetime" required>
+                                    <div class="invalid-feedback">请选择预约时间</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="pStatus" class="form-label">预约状态</label>
+                                    <select class="form-select" id="pStatus" name="pStatus" required>
+                                        <option value="待就诊">待就诊</option>
+                                        <option value="已就诊">已就诊</option>
+                                        <option value="已取消">已取消</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="saveOrderBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑预约模态框 -->
+    <div class="modal fade" id="editOrderModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">编辑预约</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editOrderFormContent" class="needs-validation" novalidate>
+                        <input type="hidden" id="editPId" name="pId">
+                        <div class="mb-3">
+                            <label for="editPName" class="form-label">患者姓名</label>
+                            <input type="text" class="form-control" id="editPName" name="pName" required>
+                            <div class="invalid-feedback">请输入患者姓名</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editPAge" class="form-label">患者年龄</label>
+                            <input type="number" class="form-control" id="editPAge" name="pAge" required>
+                            <div class="invalid-feedback">请输入患者年龄</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editDName" class="form-label">科室名称</label>
+                            <select class="form-select" id="editDName" name="dName" required>
+                                <option value="">请选择科室</option>
+                            </select>
+                            <div class="invalid-feedback">请选择科室</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editDocName" class="form-label">医生姓名</label>
+                            <select class="form-select" id="editDocName" name="docName" required>
+                                <option value="">请选择医生</option>
+                            </select>
+                            <div class="invalid-feedback">请选择医生</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editDFloor" class="form-label">楼层</label>
+                            <input type="text" class="form-control" id="editDFloor" name="d_floor" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editDocClass" class="form-label">医生职级</label>
+                            <input type="text" class="form-control" id="editDocClass" name="doc_class" readonly>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editPDatetime" class="form-label">预约时间</label>
+                            <input type="datetime-local" class="form-control" id="editPDatetime" name="pDatetime" required>
+                            <div class="invalid-feedback">请选择预约时间</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editPStatus" class="form-label">预约状态</label>
+                            <select class="form-select" id="editPStatus" name="pStatus" required>
+                                <option value="待就诊">待就诊</option>
+                                <option value="已就诊">已就诊</option>
+                                <option value="已取消">已取消</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="updateOrderBtn">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认模态框 -->
+    <div class="modal fade" id="deleteOrderModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">确认删除</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    确定要删除这条预约记录吗？此操作不可恢复！
+                    <input type="hidden" id="deleteOrderId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" id="confirmDeleteOrder" class="btn btn-danger">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/order.js}"></script>
+</body>
+</html>

@@ -76,7 +76,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- 侧边栏导航 -->
+            <!-- 侧边栏 -->
             <div class="col-md-2 sidebar p-0">
                 <div class="p-3">
                     <h4>后台管理系统</h4>
@@ -92,11 +92,15 @@
                     </a>
                     <a th:href="@{/doctor}" th:classappend="${activePage == 'doctor'} ? 'active'"
                         class="list-group-item list-group-item-action">
-                        <i class="fas fa-hospital me-2"></i>医生信息管理
+                        <i class="fas fa-user-md me-2"></i>医生信息管理
                     </a>
                     <a th:href="@{/news}" th:classappend="${activePage == 'news'} ? 'active'"
                         class="list-group-item list-group-item-action">
-                        <i class="fas fa-hospital me-2"></i>新闻信息管理
+                        <i class="fas fa-newspaper me-2"></i>新闻信息管理
+                    </a>
+                    <a th:href="@{/order}" th:classappend="${activePage == 'order'} ? 'active'"
+                        class="list-group-item list-group-item-action">
+                        <i class="fas fa-calendar-check me-2"></i>预约信息管理
                     </a>
                 </div>
             </div>
