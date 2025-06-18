@@ -61,6 +61,7 @@
                                 <th>ID</th>
                                 <th>患者姓名</th>
                                 <th>患者年龄</th>
+                                <th>患者性别</th>
                                 <th>科室名称</th>
                                 <th>医生姓名</th>
                                 <th>科室楼层</th>
@@ -108,6 +109,14 @@
                                     <label for="pAge" class="form-label">患者年龄</label>
                                     <input type="number" class="form-control" id="pAge" name="pAge" required>
                                     <div class="invalid-feedback">请输入患者年龄</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="pGender" class="form-label">患者性别</label>
+                                    <select class="form-select" id="pGender" name="pGender" required>
+                                        <option value="">请选择性别</option>
+                                    </select>
+                                    <div class="invalid-feedback">请选择患者性别</div>
                                 </div>
                                 
                                 <div class="mb-3">
@@ -185,6 +194,14 @@
                             <label for="editPAge" class="form-label">患者年龄</label>
                             <input type="number" class="form-control" id="editPAge" name="pAge" required>
                             <div class="invalid-feedback">请输入患者年龄</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editPGender" class="form-label">患者性别</label>
+                            <select class="form-select" id="editPGender" name="pGender" required>
+                                <option value="">请选择性别</option>
+                            </select>
+                            <div class="invalid-feedback">请选择患者性别</div>
                         </div>
                         
                         <div class="mb-3">

@@ -1,5 +1,6 @@
 package com.huaxizhongyao.medicine.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import com.huaxizhongyao.medicine.pojo.order;
@@ -22,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("患者ID: " + order.getP_id());
         System.out.println("患者姓名: " + order.getP_name());
         System.out.println("患者年龄: " + order.getP_age());
+        System.out.println("患者性别: " + order.getP_gender());
         System.out.println("科室名称: " + order.getD_name());
         System.out.println("科室楼层: " + order.getD_floor());
         System.out.println("医生姓名: " + order.getDoc_name());
@@ -29,10 +31,11 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("预约时间: " + order.getP_datetime());
         System.out.println("预约状态: " + order.getP_status());
         
-        String sql = "INSERT INTO `order` (p_name, p_age, d_name, d_floor, doc_name, doc_class, p_datetime, p_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `order` (p_name, p_age, p_gender, d_name, d_floor, doc_name, doc_class, p_datetime, p_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int result = jdbcTemplate.update(sql,
                 order.getP_name(),
                 order.getP_age(),
+                order.getP_gender(),
                 order.getD_name(),
                 order.getD_floor(),
                 order.getDoc_name(),
@@ -48,6 +51,7 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("患者ID: " + order.getP_id());
         System.out.println("患者姓名: " + order.getP_name());
         System.out.println("患者年龄: " + order.getP_age());
+        System.out.println("患者性别: " + order.getP_gender());
         System.out.println("科室名称: " + order.getD_name());
         System.out.println("科室楼层: " + order.getD_floor());
         System.out.println("医生姓名: " + order.getDoc_name());
@@ -55,10 +59,11 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("预约时间: " + order.getP_datetime());
         System.out.println("预约状态: " + order.getP_status());
         
-        String sql = "UPDATE `order` SET p_name=?, p_age=?, d_name=?, d_floor=?, doc_name=?, doc_class=?, p_datetime=?, p_status=? WHERE p_id=?";
+        String sql = "UPDATE `order` SET p_name=?, p_age=?, p_gender=?, d_name=?, d_floor=?, doc_name=?, doc_class=?, p_datetime=?, p_status=? WHERE p_id=?";
         int result = jdbcTemplate.update(sql,
                 order.getP_name(),
                 order.getP_age(),
+                order.getP_gender(),
                 order.getD_name(),
                 order.getD_floor(),
                 order.getDoc_name(),
@@ -78,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public order getOrderById(Integer pId) {
-        String sql = "SELECT * FROM `order` WHERE p_id=?";
+        String sql = "SELECT p_id, p_name, p_age, p_gender, d_name, d_floor, doc_name, doc_class, p_datetime, p_status FROM `order` WHERE p_id=?";
         try {
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(order.class), pId);
         } catch (Exception e) {
@@ -89,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<order> getOrdersByPage(int page, int size) {
         int offset = (page - 1) * size;
-        String sql = "SELECT * FROM `order` LIMIT ? OFFSET ?";
+        String sql = "SELECT p_id, p_name, p_age, p_gender, d_name, d_floor, doc_name, doc_class, p_datetime, p_status FROM `order` LIMIT ? OFFSET ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(order.class), size, offset);
     }
 
@@ -101,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<order> getAllOrders() {
-        String sql = "SELECT * FROM `order`";
+        String sql = "SELECT p_id, p_name, p_age, p_gender, d_name, d_floor, doc_name, doc_class, p_datetime, p_status FROM `order`";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(order.class));
     }
 
@@ -128,6 +133,11 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return updatedCount;
+    }
+
+    @Override
+    public List<String> getGenderOptions() {
+        return Arrays.asList("男", "女", "其他");
     }
 
     @Override

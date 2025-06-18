@@ -5,9 +5,12 @@ import java.util.Map;
 import com.huaxizhongyao.medicine.pojo.order;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public interface OrderService {
+    public interface OrderService {
     // 添加预约
     boolean addOrder(order order);
+    
+    // 获取患者性别选项
+    List<String> getGenderOptions();
     
     // 更新预约
     boolean updateOrder(order order);

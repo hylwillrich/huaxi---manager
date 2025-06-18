@@ -32,6 +32,7 @@ async function loadDepartmentOptions() {
             const option = document.createElement('option');
             option.value = dept.name;  // 使用科室名称作为value
             option.textContent = dept.name;
+            option.dataset.id = dept.id;  // 设置科室ID
             addSelect.appendChild(option.cloneNode(true));
             editSelect.appendChild(option);
         });
@@ -230,14 +231,17 @@ async function handleFormSubmit(event, url, method) {
             console.log(key, value);
         }
         
-        // 添加科室名称参数
+        // 添加科室ID和名称参数
         const deptSelect = form.querySelector('select[name="dName"]');
         if (!deptSelect) {
             console.error('科室选择框元素未找到');
             showToast('表单数据异常，请刷新页面重试', 'danger');
             return;
         }
+        const selectedOption = deptSelect.options[deptSelect.selectedIndex];
+        const dId = selectedOption.dataset.id || '';
         const dName = deptSelect.value;
+        formData.append('dId', dId);
         formData.append('dName', dName);
         
         // 如果是编辑表单且没有选择新照片，保留原照片

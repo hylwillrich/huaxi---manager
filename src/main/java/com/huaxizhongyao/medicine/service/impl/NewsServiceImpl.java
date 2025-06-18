@@ -24,7 +24,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<News> getAllNews() {
 
-        String sql = "SELECT n_id as nId,n_title as nTitle,n_content as nContent,n_date as nDate , n_pic as nPic FROM news";
+        String sql = "SELECT * FROM news";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(News.class));
     }
 

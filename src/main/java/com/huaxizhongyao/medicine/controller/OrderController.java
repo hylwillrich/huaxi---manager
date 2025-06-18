@@ -224,6 +224,12 @@ public class OrderController {
     }
 
     // 获取JdbcTemplate
+    // 获取性别选项
+    @GetMapping("/genderOptions")
+    public ResponseEntity<List<String>> getGenderOptions() {
+        return ResponseEntity.ok(orderService.getGenderOptions());
+    }
+
     @GetMapping("/jdbc")
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;

@@ -51,7 +51,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 初始化
   loadDepartments();
+  loadGenderOptions();
   loadOrders();
+
+  // 加载性别选项
+  function loadGenderOptions() {
+    fetch("/order/genderOptions")
+      .then(response => response.ok ? response.json() : Promise.reject('请求失败'))
+      .then(options => {
+        const selects = [
+          document.getElementById("pGender"),
+          document.getElementById("editPGender")
+        ];
+        
+        selects.forEach(select => {
+          if (select) {
+            select.innerHTML = `<option value="">请选择性别</option>${
+              options.map(opt => `<option value="${opt}">${opt}</option>`).join('')
+            }`;
+          }
+        });
+      })
+      .catch(error => console.error('加载性别选项失败:', error));
+  }
 
   // 事件监听
   addOrderBtn.addEventListener("click", () => {
@@ -196,6 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${order.pId}</td>
         <td>${order.pName}</td>
         <td>${order.pAge}</td>
+        <td>${order.pGender || '未设置'}</td>
         <td>${order.dName}</td>
         <td>${order.docName}</td>
         <td>${order.dFloor}</td>
@@ -248,6 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("editPId").value = order.pId;
         document.getElementById("editPName").value = order.pName;
         document.getElementById("editPAge").value = order.pAge;
+        document.getElementById("editPGender").value = order.pGender || "";
         document.getElementById("editPStatus").value = order.pStatus;
 
         // 设置科室和楼层
@@ -327,6 +351,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ...(isEdit && { pId: getFormValue("pId") }),
       pName: getFormValue("pName")?.trim(),
       pAge: getFormValue("pAge"),
+      pGender: getFormValue("pGender"),
       dName: getFormValue("dName"),
       docName: getFormValue("docName"),
       dFloor: getFormValue("dFloor"),

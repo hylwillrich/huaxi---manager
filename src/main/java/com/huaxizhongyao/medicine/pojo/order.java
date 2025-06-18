@@ -30,6 +30,9 @@ public class order {
     
     @JsonProperty("pStatus")
     private String p_status;
+    
+    @JsonProperty("pGender")
+    private String p_gender;
 
     @Override
     public String toString() {
@@ -43,6 +46,7 @@ public class order {
                 ", doc_class='" + doc_class + '\'' +
                 ", p_datetime=" + p_datetime +
                 ", p_status='" + p_status + '\'' +
+                ", p_gender='" + p_gender + '\'' +
                 '}';
     }
 
@@ -118,13 +122,22 @@ public class order {
         this.p_status = p_status;
     }
 
+    public String getP_gender() {
+        return p_gender;
+    }
+
+    public void setP_gender(String p_gender) {
+        this.p_gender = p_gender;
+    }
+
     public order() {
     }
 
-    public order(Integer p_id, String p_name, Integer p_age, String d_name, Integer d_floor, String doc_name, String doc_class, Date p_datetime, String p_status) {
+    public order(Integer p_id, String p_name, Integer p_age, String p_gender, String d_name, Integer d_floor, String doc_name, String doc_class, Date p_datetime, String p_status) {
         this.p_id = p_id;
         this.p_name = p_name;
         this.p_age = p_age;
+        this.p_gender = p_gender;
         this.d_name = d_name;
         this.d_floor = d_floor;
         this.doc_name = doc_name;
