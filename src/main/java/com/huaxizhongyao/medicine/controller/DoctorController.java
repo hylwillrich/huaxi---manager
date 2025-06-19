@@ -153,4 +153,52 @@ public class DoctorController {
         response.put("success", result);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/department/{dId}")
+    public ResponseEntity<Map<String, Object>> getDoctorsByDepartmentId(@PathVariable Integer dId) {
+        try {
+            // 查询医生信息
+            String doctorSql = "SELECT d.doc_id as docId, d.doc_name as docName, d.d_id as dId, " +
+                    "COALESCE(d.d_name, '') as dName, d.doc_gender as docGender, d.doc_age as docAge, " +
+                    "d.doc_photo as docPhoto, d.doc_class as docClass, dept.d_floor as dFloor " +
+                    "FROM doctor d LEFT JOIN department dept ON d.d_id = dept.d_id " +
+                    "WHERE d.d_id = ?";
+            
+            List<Doctor> doctors = doctorService.getJdbcTemplate().query(doctorSql, new Object[]{dId}, (rs, rowNum) -> {
+                Doctor doctor = new Doctor();
+                doctor.setDocId(rs.getInt("docId"));
+                doctor.setDocName(rs.getString("docName"));
+                doctor.setDId(rs.getInt("dId"));
+                doctor.setDName(rs.getString("dName"));
+                doctor.setDocGender(rs.getString("docGender"));
+                doctor.setDocAge(rs.getInt("docAge"));
+                String photoPath = rs.getString("docPhoto");
+                if (photoPath != null && !photoPath.isEmpty()) {
+                    doctor.setDocPhoto(photoPath.startsWith("/") ? photoPath : "/" + photoPath);
+                } else {
+                    doctor.setDocPhoto("");
+                }
+                doctor.setDocClass(rs.getString("docClass"));
+                doctor.setDFloor(rs.getString("dFloor")); // 新增科室楼层字段
+                return doctor;
+            });
+
+            if (doctors == null || doctors.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            // 查询科室信息
+            String deptSql = "SELECT d_name, d_floor FROM department WHERE d_id = ?";
+            Map<String, Object> departmentInfo = doctorService.getJdbcTemplate().queryForMap(deptSql, dId);
+
+            // 组合返回结果
+            Map<String, Object> response = new HashMap<>();
+            response.put("doctors", doctors);
+            response.put("department", departmentInfo);
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
 }

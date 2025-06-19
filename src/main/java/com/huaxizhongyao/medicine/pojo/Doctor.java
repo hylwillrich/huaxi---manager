@@ -9,11 +9,27 @@ public class Doctor {
     private Integer docAge; // 年龄
     private String docPhoto; // 照片路径
     private String docClass; // 医生级别
+    private String dFloor;
+
+
+
+
 
     // 构造方法
     public Doctor() {}
 
     // Getter和Setter方法
+
+
+
+    public String getDFloor() {
+        return dFloor;
+    }
+    
+    public void setDFloor(String dFloor) {
+        this.dFloor = dFloor;
+    }
+
     public Integer getDocId() {
         return docId;
     }

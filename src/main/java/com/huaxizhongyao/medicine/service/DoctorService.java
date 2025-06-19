@@ -30,4 +30,7 @@ public interface DoctorService {
     
     // 根据科室查询医生
     List<Doctor> getDoctorsByDepartment(String department);
+    
+    // 根据科室名查询医生姓名列表
+    List<String> getDoctorNamesByDepartment(String departmentName);
 }

@@ -238,6 +238,12 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public List<String> getDoctorNamesByDepartment(String departmentName) {
+        String sql = "SELECT doc_name FROM doctor WHERE d_name = ?";
+        return jdbcTemplate.queryForList(sql, String.class, departmentName);
+    }
+
+    @Override
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
